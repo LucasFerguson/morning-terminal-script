@@ -94,7 +94,7 @@ function filterTasks(rows) {
 	const dueToday = rows.filter(row => row.due === todayString && row.status !== 'completed');
 	const overdue = rows.filter(row => new Date(row.due) < todayDate && row.status !== 'completed');
 	const completed = rows.filter(row => row.status === "completed");
-	console.log(rows[0])
+	// console.log(rows[0])
 
 	return { dueToday, overdue, completed };
 }
@@ -185,8 +185,8 @@ function generateMonthlyCalendar(tasks) {
 	function taskCountColor(num) {
 		if (num === 0) return chalk.gray(num);
 		if (num <= 2) return chalk.green(num);
-		if (num <= 4) return chalk.yellow(num);
-		return chalk.red(num);
+		if (num <= 4) return chalk.blueBright(num);
+		return chalk.magentaBright(num);
 	}
 
 	// Generate the calendar header (weekdays)
@@ -301,7 +301,7 @@ async function runMorningTasks() {
 }
 
 // Print function that prints one character at a time with a delay and returns a promise
-async function printWithDelay(text, delay = 1) {
+async function printWithDelay(text, delay = 15) {
 	return new Promise((resolve) => {
 		// If text is empty or undefined, resolve immediately
 		if (!text) {

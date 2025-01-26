@@ -2,6 +2,8 @@
 
 This project is a fun and interactive script that runs every morning on your terminal. It generates a visually appealing monthly calendar with your tasks, highlights important days, and provides a motivational start to your day. The script integrates with a PostgreSQL database to manage tasks.
 
+![Demo of app](morning-script-demo.gif)
+
 ---
 
 ## **Features**
@@ -127,6 +129,7 @@ C:\Users\Lucas\.Lucas\2025Code\morning-terminal-script\
 ```
 
 ### **Example Output**
+![Demo of app](morning-script-demo.gif)
 
 When you run the script, you’ll see something like this:
 
