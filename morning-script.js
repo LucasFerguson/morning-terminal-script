@@ -1,4 +1,3 @@
-// Import the pg library
 import chalk from 'chalk'; // For colorful console output
 import pkg from 'pg'; // For PostgreSQL connection
 const { Client } = pkg;
@@ -55,7 +54,7 @@ async function connectToDatabase() {
 
 // Function to fetch tasks from the database
 async function fetchTasks(client) {
-	const query = 'SELECT title, due FROM all_tasks WHERE tasklist_title = $1 ORDER BY due ASC';
+	const query = 'SELECT * FROM all_tasks WHERE tasklist_title = $1 ORDER BY due ASC';
 	const values = ['My Tasks'];
 	try {
 		const res = await client.query(query, values);
@@ -68,10 +67,22 @@ async function fetchTasks(client) {
 
 // Function to truncate and process rows
 function processTasks(rows) {
-	return rows.map(row => ({
-		title: row.title?.substring(0, 30) || '',
-		due: row.due ? new Date(row.due).toISOString().split('T')[0] : null
-	}));
+	// return rows.map(row => ({
+	// 	title: row.title?.substring(0, 200) || '',
+	// 	due: row.due ? new Date(row.due).toISOString().split('T')[0] : null
+
+	// }));
+
+	// convert to for loop
+	const processedRows = [];
+	for (let i = 0; i < rows.length; i++) {
+		const row = rows[i];
+		row.title = row.title?.substring(0, 200) || '';
+		row.due = row.due ? new Date(row.due).toISOString().split('T')[0] : null;
+		processedRows.push(row);
+	}
+
+	return processedRows;
 }
 
 // Function to filter tasks into "due today" and "overdue"
@@ -79,10 +90,13 @@ function filterTasks(rows) {
 	const todayDate = new Date(new Date().toISOString().split('T')[0]);
 	const todayString = todayDate.toISOString().split('T')[0];
 
-	const dueToday = rows.filter(row => row.due === todayString);
-	const overdue = rows.filter(row => new Date(row.due) < todayDate);
+	// Filter tasks into different categories
+	const dueToday = rows.filter(row => row.due === todayString && row.status !== 'completed');
+	const overdue = rows.filter(row => new Date(row.due) < todayDate && row.status !== 'completed');
+	const completed = rows.filter(row => row.status === "completed");
+	console.log(rows[0])
 
-	return { dueToday, overdue };
+	return { dueToday, overdue, completed };
 }
 
 // Function to display a fun morning greeting
@@ -249,17 +263,21 @@ async function runMorningTasks() {
 
 		// Process and filter tasks
 		const processedRows = processTasks(rows);
-		const { dueToday, overdue } = filterTasks(processedRows);
+		const { dueToday, overdue, completed } = filterTasks(processedRows);
 
 		// Display tasks in a fun format
 		await printWithDelay(generateTasksDisplay(dueToday, overdue));
 
 		await printWithDelay("\n");
 		// Generate and display the monthly calendar
-		const calendar = generateMonthlyCalendar(processedRows);
-		saveTextToFile("task-calendar.md", util.stripVTControlCharacters(calendar));
+		const calendar_overdue = generateMonthlyCalendar(overdue);
+		await printWithDelay("Calendar of " + chalk.redBright("Overdue") + " Tasks:");
+		await printWithDelay(calendar_overdue);
+		const calendar_completed = generateMonthlyCalendar(completed);
+		await printWithDelay("Calendar of " + chalk.greenBright("Completed") + " Tasks:");
+		await printWithDelay(calendar_completed);
 
-		await printWithDelay(calendar);
+		saveTextToFile("task-calendar_completed.md", util.stripVTControlCharacters(calendar_completed));
 
 		// Add a motivational message
 		await printWithDelay(chalk.cyan('\n========================'));
@@ -283,7 +301,7 @@ async function runMorningTasks() {
 }
 
 // Print function that prints one character at a time with a delay and returns a promise
-async function printWithDelay(text, delay = 20) {
+async function printWithDelay(text, delay = 1) {
 	return new Promise((resolve) => {
 		// If text is empty or undefined, resolve immediately
 		if (!text) {
