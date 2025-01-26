@@ -9,21 +9,21 @@ import util from 'util'; // For utility functions
 
 import env from './env.js'; // Import the database configuration
 
-// Object Example from all_tasks as of 2025-01-26
+// Object Example from all_tasks table as of 2025-01-26
 //  {
 //     kind: 'tasks#task',
 //     id: 'eTVFMlIzZGV1VEh2TnhkSA',
 //     etag: '"MzQ4ODczNDk4"',
 //     title: 'finish server',
 //     updated: 2024-12-29T23:41:00.000Z,
-//     selflink: 'https://www.googleapis.com/tasks/v1/lists/MTE3NzAwMzYwNzc0NTY4NjQ1ODM6MDow/tasks/eTVFMlIzZGV1VEh2TnhkSA',
+//     selflink: 'https://www.googleapis.com/tasks/v1/lists/AAAAAA',
 //     position: '00000000000000000052',
 //     status: 'needsAction',
 //     due: 2024-12-31T00:00:00.000Z,
 //     completed: null,
 //     deleted: false,
 //     hidden: false,
-//     webviewlink: 'https://tasks.google.com/task/y5E2R3deuTHvNxdH?sa=6',
+//     webviewlink: 'https://tasks.google.com/task/aaaaa?sa=6',
 //     n8n_updatetime: null,
 //     notes: null,
 //     links: '{}',
@@ -35,9 +35,6 @@ import env from './env.js'; // Import the database configuration
 
 // Create a new PostgreSQL client
 const client = new Client(env.dbConfig);
-
-
-
 
 // Function to connect to the database
 async function connectToDatabase() {
