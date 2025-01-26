@@ -132,34 +132,11 @@ C:\Users\Lucas\.Lucas\2025Code\morning-terminal-script\
 ```
 
 ### **Example Output**
+*Dark+ Demo in Windows Terminal*
 ![Demo of app](morning-script-demo.gif)
+*Retro Demo in Windows Terminal*
+![Retro Demo](morning-script-demo-retro.gif)
 
-When you run the script, you’ll see something like this:
-
-```
-┌───────────────────────────────────────────────────────────┐
-│   Sun   Mon   Tue   Wed   Thu   Fri   Sat                │
-├───────────────────────────────────────────────────────────┤
-│       Task 1 ⁵                                           │
-│       Task 2, Task 3 ¹⁵                                  │
-│                                                           │
-│       Task 4 ²⁰                                           │
-│                                                           │
-└───────────────────────────────────────────────────────────┘
-
-🌟 Tasks Due Today:
-Total: 2 🗓️
-
-⚠️ Overdue Tasks:
-Total: 1 ⏳
-
-💡 Motivational Quote of the Day:
-"The secret of getting ahead is getting started." – Mark Twain
-
-✅ Connection closed
-```
-
----
 
 ### **Troubleshooting**
 1. If the script does not run as expected:
