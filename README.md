@@ -1,6 +1,6 @@
 # **Morning Terminal Script**
 
-I build this project as a fun way to display the tasks I need to do on a given day every morning. The script generates a visually appealing monthly calendar with tasks, highlights important days, and provides a motivational message at the end.
+I build this project as a fun way to display the tasks I need to do for the day every morning. The script generates a nice ASCI monthly calendar with the number of tasks due/done, highlights important days, and provides a motivational message at the end.
 If you want to use this project, you'll first need to set up a PostgreSQL database that stores your tasks with the schema found in this README. I use n8n to automate pulling my tasks from the Google Tasks API every 20 seconds and save them to the PostgreSQL database. At some point, I'll write a blog post about how I set up n8n to do this. :)
 
 *Dark+ Demo in Windows Terminal*
