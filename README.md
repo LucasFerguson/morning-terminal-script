@@ -1,6 +1,7 @@
 # **Morning Terminal Script**
 
-This project is a fun and interactive script that runs every morning on your terminal. It generates a visually appealing monthly calendar with your tasks, highlights important days, and provides a motivational start to your day. The script integrates with a PostgreSQL database to manage tasks.
+I build this project as a fun way to display the tasks I need to do on a given day every morning. The script generates a visually appealing monthly calendar with tasks, highlights important days, and provides a motivational message at the end.
+If you want to use this project, you'll first need to set up a PostgreSQL database that stores your tasks with the schema found in this README. I use n8n to automate pulling my tasks from the Google Tasks API every 20 seconds and save them to the PostgreSQL database. At some point, I'll write a blog post about how I set up n8n to do this. :)
 
 *Dark+ Demo in Windows Terminal*
 ![Demo of app](morning-script-demo.gif)
@@ -9,7 +10,7 @@ This project is a fun and interactive script that runs every morning on your ter
 
 ---
 
-## **Features**
+## **Overview of Features**
 - **Monthly Calendar**: Displays tasks for the entire month in a horizontal calendar format.
 - **Task Highlights**:
   - Yellow for days with exactly 3 tasks.
@@ -98,7 +99,7 @@ The project includes a PowerShell script (`create-task.ps1`) that creates a sche
 
 2. Navigate to the project directory:
    ```bash
-   cd C:\Users\Lucas\.Lucas\2025Code\morning-terminal-script
+   cd morning-terminal-script
    ```
 
 3. Run the PowerShell script to create the scheduled task:
@@ -116,7 +117,7 @@ The project includes a PowerShell script (`create-task.ps1`) that creates a sche
 
 ### **Project Structure**
 ```
-C:\Users\Lucas\.Lucas\2025Code\morning-terminal-script\
+...\morning-terminal-script\
 │
 ├── generated_text_elements/      # Directory for generated text files (if applicable)
 ├── .gitignore                    # Git ignore file
