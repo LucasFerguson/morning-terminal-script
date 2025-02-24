@@ -8,6 +8,7 @@ import path from 'path'; // For path operations
 import util from 'util'; // For utility functions
 
 import env from './env.js'; // Import the database configuration
+import { exec } from 'child_process';
 
 // Object Example from all_tasks table as of 2025-01-26
 //  {
@@ -227,6 +228,43 @@ function generateMonthlyCalendar(tasks) {
 	return calendarOutput;
 }
 
+
+
+// Check for running processes on Windows
+async function checkForRunningProcesses() {
+	let printString = '';
+
+	try {
+		const stdout = await new Promise((resolve, reject) => {
+			exec('tasklist', (error, stdout) => {
+				if (error) reject(error);
+				else resolve(stdout);
+			});
+		});
+
+		const processes = stdout.toLowerCase();
+		const synctrayzor = processes.includes('synctrayzor.exe');
+		const netbird = processes.includes('netbird.exe');
+
+		printString += chalk.cyan('Process Status:\n');
+		printString += `SyncTrayzor: ${synctrayzor ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
+		printString += `NetBird: ${netbird ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
+
+		// if (synctrayzor && netbird) {
+		// 	printString += chalk.green('✅ All required processes are running\n');
+		// } else {
+		// 	printString += chalk.yellow('⚠️ Some required processes are missing\n');
+		// }
+
+		return printString;
+	} catch (error) {
+		return chalk.red('❌ Error checking processes: ' + error + '\n');
+	}
+}
+
+
+
+
 // save text to files in generated_text_elements folder
 function saveTextToFile(filename, text) {
 	const dir = env.fileSavePath.path;
@@ -251,6 +289,13 @@ async function runMorningTasks() {
 	try {
 		// Display greeting
 		await printWithDelay(generateGreeting());
+
+		// Check to ensure processes are running on windows:
+		// - SyncTrayzor
+		// - NetBird
+
+		// Check for required processes on Windows
+		await printWithDelay(await checkForRunningProcesses());
 
 		// Connect to the database
 		client = await connectToDatabase();
