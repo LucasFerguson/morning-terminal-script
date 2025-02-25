@@ -245,10 +245,16 @@ async function checkForRunningProcesses() {
 		const processes = stdout.toLowerCase();
 		const synctrayzor = processes.includes('synctrayzor.exe');
 		const netbird = processes.includes('netbird.exe');
+		const nextcloud = processes.includes('nextcloud.exe');
+		const espanso = processes.includes('espansod.exe');
+		const autohotkey = processes.includes('autohotkey64.exe');
 
 		printString += chalk.cyan('Process Status:\n');
 		printString += `SyncTrayzor: ${synctrayzor ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
 		printString += `NetBird: ${netbird ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
+		printString += `NextCloud: ${nextcloud ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
+		printString += `Espanso: ${espanso ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
+		printString += `AutoHotkey: ${autohotkey ? chalk.green('✅ Running') : chalk.red('❌ Not Running')}\n`;
 
 		// if (synctrayzor && netbird) {
 		// 	printString += chalk.green('✅ All required processes are running\n');
