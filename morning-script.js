@@ -289,7 +289,7 @@ function saveTextToFile(filename, text) {
 }
 
 // Main function to run the script
-async function runMorningTasks() {
+async function runMorningTasks(options = { quickMode: false, skipProcessCheck: false }) {
 	let client;
 
 	try {
@@ -301,7 +301,12 @@ async function runMorningTasks() {
 		// - NetBird
 
 		// Check for required processes on Windows
-		await printWithDelay(await checkForRunningProcesses());
+		if (!options.skipProcessCheck) {
+			await printWithDelay(chalk.cyan('Checking for required processes...'));
+			await printWithDelay(await checkForRunningProcesses());
+		} else {
+			await printWithDelay(chalk.cyan('Skipping process check...'));
+		}
 
 		// Connect to the database
 		client = await connectToDatabase();
@@ -393,5 +398,12 @@ async function printWithDelay(text, delay = 15) {
 
 
 
-// Run the main function
-runMorningTasks();
+// Parse command line arguments
+const args = process.argv.slice(2);
+const options = {
+	quickMode: args.includes('--quick') || args.includes('-q'),
+	skipProcessCheck: args.includes('--skip-process') || args.includes('-s')
+};
+
+// Run the main function with options
+runMorningTasks(options);
